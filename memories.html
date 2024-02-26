@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Automatic Image Slider</title>
+  <style>
+    #slider {
+      position: relative;
+      width: 500px;
+      height: 300px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    #slider ul {
+      position: relative;
+      list-style: none;
+      height: 100%;
+      width: 10000%;
+      padding: 0;
+      margin: 0;
+      transition: all 750ms ease;
+      left: 0;
+    }
+
+    #slider ul li {
+      position: relative;
+      height: 100%;
+      float: left;
+    }
+
+    #slider ul li img {
+      width: 500px;
+      height: 300px;
+    }
+
+    #slider #prev, #slider #next {
+      width: 50px;
+      line-height: 50px;
+      text-align: center;
+      color: white;
+      text-decoration: none;
+      position: absolute;
+      top: 50%;
+      border-radius: 50%;
+      font-size: 2rem;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+      transform: translateY(-50%);
+      transition: all 150ms ease;
+    }
+
+    #slider #prev {
+      left: 10px;
+    }
+
+    #slider #next {
+      right: 10px;
+    }
+
+    #slider #prev:hover, #slider #next:hover {
+      color: yellow;
+      text-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
+    }
+  </style>
+</head>
+<body>
+  <div id="slider">
+    <ul id="slideWrap">
+      <li><img src="img1.jpg" alt=""></li>
+      <li><img src="img2.jpg" alt=""></li>
+      <li><img src="img3.jpg" alt=""></li>
+      <li><img src="img4.jpg" alt=""></li>
+      <li><img src="img5.jpg" alt=""></li>
+    </ul>
+    <a id="prev" href="#">≪</a>
+    <a id="next" href="#">≫</a>
+  </div>
+  <script>
+    var images = document.querySelectorAll("#slider ul li img");
+    var slideWrap = document.getElementById("slideWrap");
+    var prev = document.getElementById("prev");
+    var next = document.getElementById("next");
+    var index = 0;
+    var timer;
+
+    function displayNextImage() {
+      index = (index === images.length - 1) ? 0 : index + 1;
+      slideWrap.style.left = -index * 500 + "px";
+    }
+
+    function displayPreviousImage() {
+      index = (index <= 0) ? images.length - 1 : index - 1;
+      slideWrap.style.left = -index * 500 + "px";
+    }
+
+    function startTimer() {
+      timer = setInterval(displayNextImage, 3000);
+    }
+
+    function stopTimer() {
+      clearInterval(timer);
+    }
+
+    prev.addEventListener("click", function(e) {
+      e.preventDefault();
+      displayPreviousImage();
+      stopTimer();
+      startTimer();
+    });
+
+    next.addEventListener("click", function(e) {
+      e.preventDefault();
+      displayNextImage();
+      stopTimer();
+      startTimer();
+    });
+
+    startTimer();
+  </script>
+</body>
+</html>
